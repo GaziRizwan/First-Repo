@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: dotnetcoreapp
+  name: dotnetcoreapp
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: dotnetcoreapp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: dotnetcoreapp
+    spec:
+      containers:
+      - image: docker.io/pushanperennial/dotnetcoreapp
+        name: dotnetcoreapp
+        imagePullPolicy: Always
+        resources: {}
+        ports:
+          - containerPort: 80
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnetcoreapp
+  labels:
+    run: dotnetcoreapp
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: dotnetcoreapp
+  type: NodePort
